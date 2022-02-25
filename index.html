@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <!-- we import arjs version without NFT but with marker + location based support -->
+  <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <body style="margin : 0px; overflow: hidden;">
+
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+
+      <a-marker markerhandler type='barcode' value='2'>
+          <a-box position='0 0.5 0' color="yellow"></a-box>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script type="text/javascript">
+      window.addEventListener('load', () => {
+          const camera = document.querySelector('[camera]');
+          const marker = document.querySelector('a-marker');
+          let check;
+
+          let osc = new Tone.Oscillator(440, "square").toDestination()
+
+          marker.addEventListener('markerFound', () => {
+              let cameraPosition = camera.object3D.position;
+              let markerPosition = marker.object3D.position;
+              let distance = cameraPosition.distanceTo(markerPosition)
+
+              osc.start()
+
+              check = setInterval(() => {
+                  cameraPosition = camera.object3D.position;
+                  markerPosition = marker.object3D.position;
+
+                  osc.frequency.value = (6.283/2 + marker.object3D.rotation.y)/6.283 * 440 + 100;
+
+                  //console.log(marker.object3D.position)
+                  //console.log(marker.object3D.rotation)
+              }, 100);
+          });
+
+          marker.addEventListener('markerLost', () => {
+            clearInterval(check);
+            osc.stop();
+          })
+
+          let currentStream;
+
+          function stopMediaTracks(stream) {
+            stream.getTracks().forEach(track => {
+              track.stop();
+            });
+          }
+
+          function gotDevices(mediaDevices) {
+            console.log('available cameras:')
+            mediaDevices.forEach(mediaDevice => {
+              if (mediaDevice.kind === 'videoinput') {
+                console.log(mediaDevice);
+              }
+            });
+          }
+
+          setTimeout(() => {
+            if (typeof currentStream !== 'undefined') {
+              stopMediaTracks(currentStream);
+            }
+            const constraints = {
+              video: {deviceId: { exact: '655F37D90ADD6963612A77C564DCBC2FAFDCD272'}},
+              audio: false
+            };
+            navigator.mediaDevices
+              .getUserMedia(constraints)
+              .then((stream) => {
+                currentStream = stream;
+
+                document.getElementById('arjs-video').srcObject = stream;
+                var event = new CustomEvent("camera-init", { stream: stream });
+                window.dispatchEvent(event);
+
+                document.body.addEventListener("click", function () {
+                    document.getElementById('arjs-video').play();
+                  });
+                return navigator.mediaDevices.enumerateDevices();
+              })
+              .then(gotDevices)
+              .catch((error) => {
+                console.error(error);
+              });
+          },2000);
+
+      })
+    </script>
+  </body>
+</html>
