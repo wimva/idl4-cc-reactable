@@ -1,34 +1,29 @@
-import * as Tone from 'tone';
 import videoSourceSelector from './video-source-selector';
-
-videoSourceSelector();
+import markerYellow from './marker-yellow';
+import markerRed from './marker-red';
+import * as Tone from 'tone';
 
 const camera = document.querySelector('[camera]');
-const marker = document.querySelector('a-marker');
-let check;
 
-let osc = new Tone.Oscillator(440, 'square').toDestination();
+const markerGreenElement = document.querySelector('#marker-green');
+const markerYellowElement = document.querySelector('#marker-yellow');
+const markerRedElement = document.querySelector('#marker-red');
+const markerBlueElement = document.querySelector('#marker-blue');
 
-marker.addEventListener('markerFound', () => {
-  let cameraPosition = camera.object3D.position;
-  let markerPosition = marker.object3D.position;
-  let distance = cameraPosition.distanceTo(markerPosition);
+const startButton = document.querySelector('#start-button');
+const startOverlay = document.querySelector('#start-overlay');
 
-  osc.start();
+window.addEventListener('arjs-video-loaded', () => {
+  startButton.style.display = 'block';
 
-  check = setInterval(() => {
-    cameraPosition = camera.object3D.position;
-    markerPosition = marker.object3D.position;
-
-    osc.frequency.value =
-      ((6.283 / 2 + marker.object3D.rotation.y) / 6.283) * 440 + 100;
-
-    //console.log(marker.object3D.position)
-    //console.log(marker.object3D.rotation)
-  }, 100);
+  videoSourceSelector();
 });
 
-marker.addEventListener('markerLost', () => {
-  clearInterval(check);
-  osc.stop();
-});
+startButton.onclick = async () => {
+  await Tone.start();
+
+  startOverlay.style.display = 'none';
+
+  markerYellow(markerYellowElement);
+  markerRed(markerRedElement);
+};

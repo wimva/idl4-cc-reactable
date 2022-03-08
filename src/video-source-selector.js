@@ -18,41 +18,39 @@ function gotDevices(mediaDevices) {
 }
 
 export default function () {
-  setTimeout(() => {
-    const videoElement = document.getElementById('arjs-video');
+  const videoElement = document.getElementById('arjs-video');
 
-    if (typeof currentStream !== 'undefined') {
-      stopMediaTracks(currentStream);
-    }
+  if (typeof currentStream !== 'undefined') {
+    stopMediaTracks(currentStream);
+  }
 
-    let constraints = {
-      video: true,
-      audio: false,
+  let constraints = {
+    video: true,
+    audio: false,
+  };
+
+  if (videoSourceId) {
+    constraints.video = {
+      deviceId: {
+        exact: videoSourceId,
+      },
     };
+  }
 
-    if (videoSourceId) {
-      constraints.video = {
-        deviceId: {
-          exact: videoSourceId,
-        },
-      };
-    }
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then((stream) => {
+      currentStream = stream;
 
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        currentStream = stream;
-
-        videoElement.srcObject = stream;
-        var event = new CustomEvent('camera-init', {
-          stream: stream,
-        });
-        window.dispatchEvent(event);
-        return navigator.mediaDevices.enumerateDevices();
-      })
-      .then(gotDevices)
-      .catch((error) => {
-        console.error(error);
+      videoElement.srcObject = stream;
+      var event = new CustomEvent('camera-init', {
+        stream: stream,
       });
-  }, 2000);
+      window.dispatchEvent(event);
+      return navigator.mediaDevices.enumerateDevices();
+    })
+    .then(gotDevices)
+    .catch((error) => {
+      console.error(error);
+    });
 }
