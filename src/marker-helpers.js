@@ -42,3 +42,52 @@ export const notes = [
   'F5',
   'G5',
 ];
+
+export class loopstation {
+  loopList = [];
+  loopLength = 8;
+  loopIndex = 0;
+  loopTempo = 2;
+  loopTempos = [80, 160, 320];
+
+  synth = null;
+  synthNoteLentgh = '32n';
+
+  constructor(synth, synthNoteLentgh) {
+    this.synth = new synth().toDestination();
+    if (synthNoteLentgh) this.synthNoteLentgh = synthNoteLentgh;
+    setTimeout(() => {
+      this.loop();
+    }, this.loopTempos[this.loopTempo]);
+  }
+
+  loop() {
+    // control loop
+    this.loopIndex++;
+    if (this.loopIndex >= this.loopLength) {
+      this.loopIndex = 0;
+    }
+
+    // add notes
+    const newNote = this.getNewNote();
+    if (newNote != false) {
+      this.loopList[this.loopIndex] = newNote;
+    }
+
+    // adjust tempo
+    this.setTempo();
+
+    // play notes
+    if (this.loopList[this.loopIndex]) {
+      this.synth.triggerAttackRelease(
+        notes[this.loopList[this.loopIndex]],
+        this.synthNoteLentgh,
+      );
+    }
+
+    // repeat loop
+    setTimeout(() => {
+      this.loop();
+    }, this.loopTempos[this.loopTempo]);
+  }
+}
