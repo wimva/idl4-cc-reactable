@@ -18,6 +18,9 @@
       embedded
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
     >
+      <a-marker id="marker-black" markerhandler type="barcode" value="0">
+        <a-box position="0 0.5 0" color="black"></a-box>
+      </a-marker>
       <a-marker id="marker-green" markerhandler type="barcode" value="1">
         <a-box position="0 0.5 0" color="green"></a-box>
       </a-marker>
@@ -29,6 +32,9 @@
       </a-marker>
       <a-marker id="marker-yellow" markerhandler type="barcode" value="4">
         <a-box position="0 0.5 0" color="yellow"></a-box>
+      </a-marker>
+      <a-marker id="marker-white" markerhandler type="barcode" value="5">
+        <a-box position="0 0.5 0" color="white"></a-box>
       </a-marker>
 
       <a-entity camera></a-entity>
