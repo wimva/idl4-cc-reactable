@@ -22,7 +22,7 @@ export default function (marker) {
         normalise(marker.object3D.position.x) * 8 + 'n',
       );
       autoFilter.octaves = normalise(marker.object3D.rotation.y) * 8;
-    }, 10);
+    }, 50);
   });
 
   marker.addEventListener('markerLost', () => {

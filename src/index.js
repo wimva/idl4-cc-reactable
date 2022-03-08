@@ -2,6 +2,7 @@ import videoSourceSelector from './video-source-selector';
 import markerYellow from './marker-yellow';
 import markerRed from './marker-red';
 import markerGreen from './marker-green';
+import markerBlue from './marker-blue';
 import * as Tone from 'tone';
 
 const camera = document.querySelector('[camera]');
@@ -28,4 +29,5 @@ startButton.onclick = async () => {
   markerYellow(markerYellowElement);
   markerRed(markerRedElement);
   markerGreen(markerGreenElement);
+  markerBlue(markerBlueElement);
 };

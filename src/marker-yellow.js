@@ -17,7 +17,7 @@ export default function (marker) {
         oscTypes[
           Math.floor(normalise(marker.object3D.position.x) * oscTypes.length)
         ];
-    }, 10);
+    }, 50);
   });
 
   marker.addEventListener('markerLost', () => {
