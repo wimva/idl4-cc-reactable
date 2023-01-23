@@ -1,8 +1,7 @@
 // LOOPSTATION
 
 import * as Tone from 'tone';
-import { normalise, notes, loopstation } from './marker-helpers';
-
+import { normalisePosition, normaliseRotation, notes, loopstation } from './marker-helpers';
 export default function (marker) {
   let currentNote = null;
   let markerIsAdded = false;
@@ -12,7 +11,7 @@ export default function (marker) {
   loop.getNewNote = () => {
     if (markerIsAdded) {
       const newNote = Math.floor(
-        normalise(marker.object3D.rotation.y) * notes.length,
+        normaliseRotation(marker.object3D.rotation.y) * notes.length,
       );
       if (newNote !== currentNote) {
         currentNote = newNote;
@@ -28,7 +27,7 @@ export default function (marker) {
   loop.setTempo = () => {
     if (markerIsAdded) {
       loop.loopTempo = Math.floor(
-        normalise(marker.object3D.position.x) * loop.loopTempos.length,
+        normalisePosition(marker.object3D.position.x) * loop.loopTempos.length,
       );
     }
   };

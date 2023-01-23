@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Reactable in js" />
-    <link rel="stylesheet" type="text/css" href="/index.css" />
-    <title>Snowpack App</title>
-    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script type="module" src="/dist/index.js"></script>
-  </head>
-  <body style="margin: 0px; overflow: hidden">
-    <a-scene
-      vr-mode-ui="enabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-      embedded
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-    >
-      <a-marker id="marker-black" markerhandler type="barcode" value="0">
-        <a-box position="0 0.5 0" color="black"></a-box>
-      </a-marker>
-      <a-marker id="marker-green" markerhandler type="barcode" value="1">
-        <a-box position="0 0.5 0" color="green"></a-box>
-      </a-marker>
-      <a-marker id="marker-blue" markerhandler type="barcode" value="2">
-        <a-box position="0 0.5 0" color="blue"></a-box>
-      </a-marker>
-      <a-marker id="marker-red" markerhandler type="barcode" value="3">
-        <a-box position="0 0.5 0" color="red"></a-box>
-      </a-marker>
-      <a-marker id="marker-yellow" markerhandler type="barcode" value="4">
-        <a-box position="0 0.5 0" color="yellow"></a-box>
-      </a-marker>
-      <a-marker id="marker-white" markerhandler type="barcode" value="5">
-        <a-box position="0 0.5 0" color="white"></a-box>
-      </a-marker>
 
-      <a-entity camera></a-entity>
-    </a-scene>
-    <div class="overlay" id="start-overlay">
-      <button id="start-button">Start!</button>
-    </div>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Reactable in js" />
+  <link rel="stylesheet" type="text/css" href="/index.css" />
+  <title>Snowpack App</title>
+  <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script type="module" src="/dist/index.js"></script>
+</head>
+
+<body style="margin: 0px; overflow: hidden">
+  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+    <a-marker id="marker-black" markerhandler type="barcode" value="0">
+      <a-box position="0 0.5 0" color="black"></a-box>
+    </a-marker>
+    <a-marker id="marker-green" markerhandler type="barcode" value="1">
+      <a-box position="0 0.5 0" color="green"></a-box>
+    </a-marker>
+    <a-marker id="marker-blue" markerhandler type="barcode" value="2">
+      <a-box position="0 0.5 0" color="blue"></a-box>
+    </a-marker>
+    <a-marker id="marker-red" markerhandler type="barcode" value="3">
+      <a-box position="0 0.5 0" color="red"></a-box>
+    </a-marker>
+    <a-marker id="marker-yellow" markerhandler type="barcode" value="4">
+      <a-box position="0 0.5 0" color="yellow"></a-box>
+    </a-marker>
+    <a-marker id="marker-white" markerhandler type="barcode" value="5">
+      <a-box position="0 0.5 0" color="white"></a-box>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+  <div class="overlay" id="start-overlay">
+    <button id="start-button">Start!</button>
+  </div>
+</body>
+
 </html>

@@ -1,5 +1,12 @@
-export function normalise(input) {
-  let output = Math.abs((Math.PI + input) / (Math.PI * 2));
+export function normalisePosition(input) {
+  let output = (Math.PI * 2 + input) / (Math.PI * 4);
+  if (output < 0) output = 0;
+  if (output > 0.999999999) output = 0.999999999;
+  return output;
+}
+
+export function normaliseRotation(input) {
+  let output = (Math.PI + input) / (Math.PI * 2);
   if (output < 0) output = 0;
   if (output > 0.999999999) output = 0.999999999;
   return output;

@@ -1,7 +1,7 @@
 // SYNTH
 
 import * as Tone from 'tone';
-import { normalise, notes } from './marker-helpers';
+import { normaliseRotation, notes } from './marker-helpers';
 
 export default function (marker) {
   const synth = new Tone.PluckSynth().toDestination();
@@ -12,7 +12,7 @@ export default function (marker) {
   marker.addEventListener('markerFound', () => {
     check = setInterval(() => {
       const newNote = Math.floor(
-        normalise(marker.object3D.rotation.y) * notes.length,
+        normaliseRotation(marker.object3D.rotation.y) * notes.length,
       );
       if (newNote !== currentNote) {
         currentNote = newNote;

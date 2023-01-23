@@ -1,7 +1,7 @@
 // OSCILLATOR
 
 import * as Tone from 'tone';
-import { normalise } from './marker-helpers';
+import { normalisePosition, normaliseRotation } from './marker-helpers';
 
 export default function (marker) {
   let check;
@@ -12,10 +12,10 @@ export default function (marker) {
   marker.addEventListener('markerFound', () => {
     osc.start();
     check = setInterval(() => {
-      osc.frequency.rampTo(normalise(marker.object3D.rotation.y) * 600);
+      osc.frequency.rampTo(normaliseRotation(marker.object3D.rotation.y) * 600);
       osc.type =
         oscTypes[
-          Math.floor(normalise(marker.object3D.position.x) * oscTypes.length)
+          Math.floor(normalisePosition(marker.object3D.position.x) * oscTypes.length)
         ];
     }, 50);
   });

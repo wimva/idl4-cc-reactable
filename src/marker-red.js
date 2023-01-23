@@ -1,7 +1,7 @@
 // NOISE;
 
 import * as Tone from 'tone';
-import { normalise } from './marker-helpers';
+import { normalisePosition, normaliseRotation } from './marker-helpers';
 
 export default function (marker) {
   let check;
@@ -19,9 +19,9 @@ export default function (marker) {
     autoFilter.start();
     check = setInterval(() => {
       autoFilter.frequency.rampTo(
-        normalise(marker.object3D.position.x) * 8 + 'n',
+        normalisePosition(marker.object3D.position.x) * 8 + 'n',
       );
-      autoFilter.octaves = normalise(marker.object3D.rotation.y) * 8;
+      autoFilter.octaves = normaliseRotation(marker.object3D.rotation.y) * 8;
     }, 50);
   });
 
