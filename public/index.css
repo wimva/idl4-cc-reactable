@@ -13,3 +13,13 @@
 .overlay button {
   display: none;
 }
+
+#drawboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+video {
+  opacity: 0;
+}

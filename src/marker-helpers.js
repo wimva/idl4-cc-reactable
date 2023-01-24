@@ -6,7 +6,7 @@ export function normalisePosition(input) {
 }
 
 export function normaliseRotation(input) {
-  let output = (Math.PI + input) / (Math.PI * 2);
+  let output = (input - -1.25) / (1.5 - -1.25);
   if (output < 0) output = 0;
   if (output > 0.999999999) output = 0.999999999;
   return output;
