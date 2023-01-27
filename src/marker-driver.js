@@ -10,9 +10,9 @@ export function loopDriver(canvas, ctx) {
     let markerX = normalisePosition(marker.object3D.position.x)*canvas.width;
     let markerY = (1-normalisePosition(marker.object3D.position.y))*canvas.height;
     let rotation = normaliseRotation(marker.object3D.rotation.y);
-    let speed = (rotation)*0.2+0.05;
+    let speed = (rotation)*0.1+0.05;
 
-    let radius = canvas.width; // radius of the radar line
+    let radius = 500; // radius of the radar line
     
     // Draw the line
     ctx.strokeStyle = 'black';
