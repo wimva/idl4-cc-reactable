@@ -1,6 +1,8 @@
 import videoSourceSelector from './video-source-selector';
 import markerDriver, {loopDriver} from './marker-driver';
 import MarkerSynth from './marker-synth';
+import MarkerDrum from './marker-drum';
+import MarkerEffect from './marker-effect';
 import * as Tone from 'tone';
 
 const camera = document.querySelector('[camera]');
@@ -19,7 +21,9 @@ const startOverlay = document.querySelector('#start-overlay');
 
 let synth1 = null;
 let synth2 = null;
-let synth3 = null;
+let effect1 = null;
+let drum1 = null;
+let drum2 = null;
 
 // initiate ar js
 window.addEventListener('arjs-video-loaded', () => {
@@ -37,10 +41,9 @@ startButton.onclick = async () => {
   markerDriver(markerWhiteElement);
   synth1 = new MarkerSynth(markerYellowElement);
   synth2 = new MarkerSynth(markerRedElement);
-  synth3 = new MarkerSynth(markerBlueElement);
-
-  // markerGreen(markerGreenElement);
-  // markerBlack(markerBlackElement);
+  drum1 = new MarkerDrum(markerBlueElement);
+  drum2 = new MarkerDrum(markerGreenElement);
+  effect1 = new MarkerEffect(markerBlackElement);
 
   draw();
 };
@@ -60,15 +63,17 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw the correct markers
-  const driverMarker = loopDriver(canvas, ctx);
+  const driver = loopDriver(canvas, ctx);
   const instruments = [
-    synth1.loopSynth(canvas, ctx, driverMarker),
-    synth2.loopSynth(canvas, ctx, driverMarker),
-    synth3.loopSynth(canvas, ctx, driverMarker),
+    synth1.loop(canvas, ctx, driver),
+    synth2.loop(canvas, ctx, driver),
+    drum1.loop(canvas, ctx, driver),
+    drum2.loop(canvas, ctx, driver),
   ];
+  effect1.loop(canvas, ctx, instruments),
 
   // Request another frame
   setTimeout(() => {
     requestAnimationFrame(draw);
-  }, 10)
+  }, 1)
 }

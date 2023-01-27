@@ -15,6 +15,7 @@ export function loopDriver(canvas, ctx) {
     let radius = canvas.width; // radius of the radar line
     
     // Draw the line
+    ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.moveTo(markerX,markerY);
     let x = markerX + radius * Math.cos(angle);
