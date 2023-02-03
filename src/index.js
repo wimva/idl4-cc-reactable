@@ -6,8 +6,12 @@ import MarkerDrum from './marker-drum';
 import MarkerEffect from './marker-effect';
 import * as Tone from 'tone';
 
-const camera = document.querySelector('[camera]');
-
+const socket = new WebSocket("ws://192.168.100.2:1880");
+let socketOpen = false;
+socket.onopen = function(event) {
+  socket.send("Hello Server!");
+  socketOpen = true;
+};
 const marker0Element = document.querySelector('#marker-0');
 const marker1Element = document.querySelector('#marker-1');
 const marker2Element = document.querySelector('#marker-2');
@@ -118,6 +122,10 @@ function draw() {
   effect1.loop(canvas, ctx, instruments);
   effect2.loop(canvas, ctx, instruments);
   effect3.loop(canvas, ctx, instruments);
+
+  if (socketOpen) {
+    socket.send(ctx.getImageData(0,0,canvas.width, canvas.height).data);
+  }
 }
 
 
