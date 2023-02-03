@@ -28,7 +28,7 @@ export default class {
 
       // define
       let markerX = normalisePosition(this.marker.object3D.position.x)*canvas.width;
-      let markerY = (1-normalisePosition(this.marker.object3D.position.y))*canvas.height;
+      let markerY = normalisePosition(this.marker.object3D.position.y)*canvas.height;
       let rotation = normaliseRotation(this.marker.object3D.rotation.y);
 
       // draw the rotation
