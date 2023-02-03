@@ -32,9 +32,9 @@ export default class {
       let rotation = normaliseRotation(this.marker.object3D.rotation.y);
 
       // draw the rotation
-      ctx.strokeStyle = 'black';
+      ctx.strokeStyle = 'white';
       ctx.beginPath();
-      ctx.arc(markerX, markerY, 20, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
+      ctx.arc(markerX, markerY, canvas.width/30, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
       ctx.stroke();
 
       // compare with drivermaker
@@ -42,7 +42,7 @@ export default class {
         // play sound
         const distance = Math.sqrt(Math.pow(markerX - driver.x, 2) + Math.pow(markerY - driver.y, 2));
         
-        if (distance < 500) {
+        if (distance < canvas.width / 2) {
           const angle = Math.atan2(markerY - driver.y, markerX - driver.x);
 
           if (driver.r >= angle - 0.2 && driver.r <= angle + 0.2) {

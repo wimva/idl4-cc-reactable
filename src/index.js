@@ -85,22 +85,16 @@ startButton.onclick = async () => {
   effect2 = new MarkerEffect(marker17Element);
   effect3 = new MarkerEffect(marker18Element);
 
-  draw();
+  startTime = performance.now();
+  timedLoop();  
 };
-
-// resize the canvas
-function setCanvasSize () {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-setCanvasSize();
-window.addEventListener("resize", setCanvasSize);
 
 // draw loop
 let ctx = canvas.getContext("2d");
 function draw() {
   // Clear the canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // draw the correct markers
   const driver = loopDriver(canvas, ctx);
@@ -111,7 +105,7 @@ function draw() {
     synth4.loop(canvas, ctx, driver),
     synth5.loop(canvas, ctx, driver),
     pluck1.loop(canvas, ctx, driver),
-    pluck3.loop(canvas, ctx, driver),
+    pluck2.loop(canvas, ctx, driver),
     pluck3.loop(canvas, ctx, driver),
     pluck4.loop(canvas, ctx, driver),
     drum1.loop(canvas, ctx, driver),
@@ -121,12 +115,29 @@ function draw() {
     drum5.loop(canvas, ctx, driver),
     drum6.loop(canvas, ctx, driver),
   ];
-  effect1.loop(canvas, ctx, instruments),
-  effect2.loop(canvas, ctx, instruments),
-  effect3.loop(canvas, ctx, instruments),
+  effect1.loop(canvas, ctx, instruments);
+  effect2.loop(canvas, ctx, instruments);
+  effect3.loop(canvas, ctx, instruments);
+}
 
-  // Request another frame
-  setTimeout(() => {
-    requestAnimationFrame(draw);
-  }, 1)
+
+let startTime;
+function timedLoop() {
+  // Get the current time
+  const currentTime = performance.now();
+
+  // Calculate the time elapsed since the last iteration
+  const elapsedTime = currentTime - startTime;
+
+  // Your code to be executed in the loop
+  draw();
+
+  // Calculate the timeout for the next iteration
+  const timeout = Math.max(0, 50 - elapsedTime);
+
+  // Set the start time for the next iteration
+  startTime = performance.now();
+
+  // Schedule the next iteration
+  setTimeout(timedLoop, timeout);
 }

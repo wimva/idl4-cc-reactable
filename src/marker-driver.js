@@ -8,14 +8,14 @@ export function loopDriver(canvas, ctx) {
   if (markerIsAdded) {
     // define
     let markerX = normalisePosition(marker.object3D.position.x)*canvas.width;
-    let markerY = (1-normalisePosition(marker.object3D.position.y))*canvas.height;
+    let markerY = normalisePosition(marker.object3D.position.y)*canvas.height;
     let rotation = normaliseRotation(marker.object3D.rotation.y);
     let speed = (rotation)*0.1+0.05;
 
-    let radius = 500; // radius of the radar line
+    let radius = canvas.width / 2; // radius of the radar line
     
     // Draw the line
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'white';
     ctx.beginPath();
     ctx.moveTo(markerX,markerY);
     let x = markerX + radius * Math.cos(angle);
@@ -29,7 +29,7 @@ export function loopDriver(canvas, ctx) {
 
     // draw the rotation speed
     ctx.beginPath();
-    ctx.arc(markerX, markerY, 20, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
+    ctx.arc(markerX, markerY, canvas.width/30, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
     ctx.stroke();
 
     return {

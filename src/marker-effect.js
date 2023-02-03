@@ -27,9 +27,9 @@ export default class {
       let rotation = normaliseRotation(this.marker.object3D.rotation.y);
 
       // draw the rotation
-      ctx.strokeStyle = 'black';
+      ctx.strokeStyle = 'white';
       ctx.beginPath();
-      ctx.arc(markerX, markerY, 20, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
+      ctx.arc(markerX, markerY, canvas.width/30, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
       ctx.stroke();
 
       // find closest marker
