@@ -25,7 +25,11 @@ export default function () {
   }
 
   let constraints = {
-    video: true,
+    video: {
+      width: { min: 300, ideal: 800, max: 640 },
+      height: { min: 200, ideal: 600, max: 480 },
+      frameRate: { ideal: 6, max: 6 },
+    },
     audio: false,
   };
 

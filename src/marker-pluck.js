@@ -14,6 +14,9 @@ export default class {
     this.synth = new Tone.PluckSynth().chain(this.distortion, this.reverb, this.delay);
 
     this.marker = marker;
+    if (marker && marker.object3D && marker.object3D.position && marker.object3D.position.x) {
+      this.markerIsAdded = true;
+    }
     this.marker.addEventListener('markerFound', () => {
       this.markerIsAdded = true;
     });

@@ -43,7 +43,11 @@ export function loopDriver(canvas, ctx) {
 }
 
 export default function (givenMarker) {
+  console.log(givenMarker);
   marker = givenMarker;
+  if (marker && marker.object3D && marker.object3D.position && marker.object3D.position.x) {
+    markerIsAdded = true;
+  }
   marker.addEventListener('markerFound', () => {
     markerIsAdded = true;
   });

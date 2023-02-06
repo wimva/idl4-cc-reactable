@@ -9,6 +9,9 @@ export default class {
 
   constructor(marker) {
     this.marker = marker;
+    if (marker && marker.object3D && marker.object3D.position && marker.object3D.position.x) {
+      this.markerIsAdded = true;
+    }
     this.marker.addEventListener('markerFound', () => {
       this.markerIsAdded = true;
     });

@@ -1,3 +1,6 @@
+// TODO: trackingMethod in html aanpassen naar 'area-based' of 'camera'
+// TODO: change video constraints in video-selector
+
 import videoSourceSelector from './video-source-selector';
 import markerDriver, {loopDriver} from './marker-driver';
 import MarkerSynth from './marker-synth';
@@ -6,10 +9,9 @@ import MarkerDrum from './marker-drum';
 import MarkerEffect from './marker-effect';
 import * as Tone from 'tone';
 
-const socket = new WebSocket("ws://192.168.100.2:1880");
 let socketOpen = false;
+const socket = new WebSocket("ws://192.168.100.2:1880");
 socket.onopen = function(event) {
-  socket.send("Hello Server!");
   socketOpen = true;
 };
 const marker0Element = document.querySelector('#marker-0');
