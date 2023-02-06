@@ -1,5 +1,4 @@
-import * as Tone from 'tone';
-import { normalisePosition, normaliseRotation, notes } from './marker-helpers';
+import { normalisePosition, normaliseRotation } from './marker-helpers';
 
 export default class {
   marker = null;

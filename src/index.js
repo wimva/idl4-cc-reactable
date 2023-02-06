@@ -1,11 +1,7 @@
-// TODO: trackingMethod in html aanpassen naar 'area-based' of 'camera'
-// TODO: change video constraints in video-selector
-
 import videoSourceSelector from './video-source-selector';
+import { notes, drumNotes } from './marker-helpers';
 import markerDriver, {loopDriver} from './marker-driver';
-import MarkerSynth from './marker-synth';
-import MarkerPluck from './marker-pluck';
-import MarkerDrum from './marker-drum';
+import MarkerSound from './marker-sound';
 import MarkerEffect from './marker-effect';
 import * as Tone from 'tone';
 
@@ -14,6 +10,7 @@ const socket = new WebSocket("ws://192.168.100.2:1880");
 socket.onopen = function(event) {
   socketOpen = true;
 };
+
 const marker0Element = document.querySelector('#marker-0');
 const marker1Element = document.querySelector('#marker-1');
 const marker2Element = document.querySelector('#marker-2');
@@ -72,21 +69,23 @@ startButton.onclick = async () => {
   startOverlay.style.display = 'none';
   
   markerDriver(marker0Element);
-  drum1 = new MarkerDrum(marker1Element);
-  drum2 = new MarkerDrum(marker2Element);
-  drum3 = new MarkerDrum(marker3Element);
-  drum4 = new MarkerDrum(marker4Element);
-  drum5 = new MarkerDrum(marker5Element);
-  drum6 = new MarkerDrum(marker6Element);
-  synth1 = new MarkerSynth(marker7Element);
-  synth2 = new MarkerSynth(marker8Element);
-  synth3 = new MarkerSynth(marker9Element);
-  synth4 = new MarkerSynth(marker10Element);
-  synth5 = new MarkerSynth(marker11Element);
-  pluck1 = new MarkerPluck(marker12Element);
-  pluck2 = new MarkerPluck(marker13Element);
-  pluck3 = new MarkerPluck(marker14Element);
-  pluck4 = new MarkerPluck(marker15Element);
+
+  drum1 = new MarkerSound(marker1Element, 'MembraneSynth', drumNotes);
+  drum2 = new MarkerSound(marker2Element, 'MembraneSynth', drumNotes);
+  drum3 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
+  drum4 = new MarkerSound(marker4Element, 'MembraneSynth', drumNotes);
+  drum5 = new MarkerSound(marker5Element, 'MembraneSynth', drumNotes);
+  drum6 = new MarkerSound(marker6Element, 'MembraneSynth', drumNotes);
+  synth1 = new MarkerSound(marker7Element, 'FMSynth', notes);
+  synth2 = new MarkerSound(marker8Element, 'FMSynth', notes);
+  synth3 = new MarkerSound(marker9Element, 'FMSynth', notes);
+  synth4 = new MarkerSound(marker10Element, 'FMSynth', notes);
+  synth5 = new MarkerSound(marker11Element, 'FMSynth', notes);
+  pluck1 = new MarkerSound(marker12Element, 'PluckSynth', notes);
+  pluck2 = new MarkerSound(marker13Element, 'PluckSynth', notes);
+  pluck3 = new MarkerSound(marker14Element, 'PluckSynth', notes);
+  pluck4 = new MarkerSound(marker15Element, 'PluckSynth', notes);
+
   effect1 = new MarkerEffect(marker16Element);
   effect2 = new MarkerEffect(marker17Element);
   effect3 = new MarkerEffect(marker18Element);
@@ -125,6 +124,7 @@ function draw() {
   effect2.loop(canvas, ctx, instruments);
   effect3.loop(canvas, ctx, instruments);
 
+  // send canvas via socket to driver for LED panels
   if (socketOpen) {
     socket.send(ctx.getImageData(0,0,canvas.width, canvas.height).data);
   }

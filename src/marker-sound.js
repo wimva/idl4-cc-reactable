@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { normalisePosition, normaliseRotation, drumNotes } from './marker-helpers';
+import { normalisePosition, normaliseRotation } from './marker-helpers';
 
 export default class {
   marker = null;
@@ -7,11 +7,12 @@ export default class {
   hit = false;
   currentNote = 0;
 
-  constructor(marker) {
+  constructor(marker, synthName, notes) {
+    this.notes = notes;
     this.reverb = new Tone.JCReverb(0.4).toDestination();
     this.delay = new Tone.FeedbackDelay(0.5);
     this.distortion = new Tone.Distortion(0.8);
-    this.synth = new Tone.MembraneSynth().chain(this.distortion, this.reverb, this.delay);
+    this.synth = new Tone[synthName]().chain(this.distortion, this.reverb, this.delay);
 
     this.marker = marker;
     if (marker && marker.object3D && marker.object3D.position && marker.object3D.position.x) {
@@ -52,8 +53,8 @@ export default class {
             if (this.hit == false) {
               this.hit = true;
               const now = Tone.now()
-              const note = Math.floor(rotation * drumNotes.length);
-              this.synth.triggerAttack(drumNotes[note], now);
+              const note = Math.floor(rotation * this.notes.length);
+              this.synth.triggerAttack(this.notes[note], now);
               this.synth.triggerRelease(now + distance/1000);
             }
           } else {
@@ -84,10 +85,10 @@ export default class {
   }
 
   playContinousNote(rotation) {
-    const note = Math.floor(rotation * drumNotes.length);
+    const note = Math.floor(rotation * this.notes.length);
     if (note != this.currentNote) {
       this.currentNote = note;
-      this.synth.triggerAttack(drumNotes[note]);
+      this.synth.triggerAttack(this.notes[note]);
     }
   }
 }
