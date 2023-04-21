@@ -70,9 +70,8 @@ startButton.onclick = async () => {
 
   markerDriver(marker0Element);
 
-  drum1 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
-  drum2 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
-
+  drum1 = new MarkerSound(marker1Element, 'MembraneSynth', drumNotes);
+  drum2 = new MarkerSound(marker2Element, 'MembraneSynth', drumNotes);
   drum3 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
   drum4 = new MarkerSound(marker4Element, 'MembraneSynth', drumNotes);
   drum5 = new MarkerSound(marker5Element, 'MembraneSynth', drumNotes);
@@ -90,9 +89,6 @@ startButton.onclick = async () => {
   effect1 = new MarkerEffect(marker16Element);
   effect2 = new MarkerEffect(marker17Element);
   effect3 = new MarkerEffect(marker18Element);
-
-  synth1 = new MarkerSound(marker1Element, 'FMSynth', notes);
-  effect3 = new MarkerEffect(marker2Element);
 
   startTime = performance.now();
   timedLoop();
