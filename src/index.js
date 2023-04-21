@@ -1,13 +1,13 @@
 import videoSourceSelector from './video-source-selector';
 import { notes, drumNotes } from './marker-helpers';
-import markerDriver, {loopDriver} from './marker-driver';
+import markerDriver, { loopDriver } from './marker-driver';
 import MarkerSound from './marker-sound';
 import MarkerEffect from './marker-effect';
 import * as Tone from 'tone';
 
 let socketOpen = false;
-const socket = new WebSocket("ws://192.168.100.2:1880");
-socket.onopen = function(event) {
+const socket = new WebSocket('ws://192.168.100.2:1880');
+socket.onopen = function (event) {
   socketOpen = true;
 };
 
@@ -31,7 +31,7 @@ const marker16Element = document.querySelector('#marker-16');
 const marker17Element = document.querySelector('#marker-17');
 const marker18Element = document.querySelector('#marker-18');
 
-const canvas = document.querySelector("#drawboard");
+const canvas = document.querySelector('#drawboard');
 
 const startButton = document.querySelector('#start-button');
 const startOverlay = document.querySelector('#start-overlay');
@@ -67,11 +67,12 @@ startButton.onclick = async () => {
   await Tone.start();
 
   startOverlay.style.display = 'none';
-  
+
   markerDriver(marker0Element);
 
-  drum1 = new MarkerSound(marker1Element, 'MembraneSynth', drumNotes);
-  drum2 = new MarkerSound(marker2Element, 'MembraneSynth', drumNotes);
+  drum1 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
+  drum2 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
+
   drum3 = new MarkerSound(marker3Element, 'MembraneSynth', drumNotes);
   drum4 = new MarkerSound(marker4Element, 'MembraneSynth', drumNotes);
   drum5 = new MarkerSound(marker5Element, 'MembraneSynth', drumNotes);
@@ -90,15 +91,18 @@ startButton.onclick = async () => {
   effect2 = new MarkerEffect(marker17Element);
   effect3 = new MarkerEffect(marker18Element);
 
+  synth1 = new MarkerSound(marker1Element, 'FMSynth', notes);
+  effect3 = new MarkerEffect(marker2Element);
+
   startTime = performance.now();
-  timedLoop();  
+  timedLoop();
 };
 
 // draw loop
-let ctx = canvas.getContext("2d");
+let ctx = canvas.getContext('2d');
 function draw() {
   // Clear the canvas
-  ctx.fillStyle = "black";
+  ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // draw the correct markers
@@ -120,16 +124,23 @@ function draw() {
     drum5.loop(canvas, ctx, driver),
     drum6.loop(canvas, ctx, driver),
   ];
+
+  instruments.forEach((instrument) => {
+    if (instrument) {
+      instrument.reverb.roomSize.value = 0.4;
+      instrument.distortion.distortion = 0.8;
+    }
+  });
+
   effect1.loop(canvas, ctx, instruments);
   effect2.loop(canvas, ctx, instruments);
   effect3.loop(canvas, ctx, instruments);
 
   // send canvas via socket to driver for LED panels
   if (socketOpen) {
-    socket.send(ctx.getImageData(0,0,canvas.width, canvas.height).data);
+    socket.send(ctx.getImageData(0, 0, canvas.width, canvas.height).data);
   }
 }
-
 
 let startTime;
 function timedLoop() {

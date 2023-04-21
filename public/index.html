@@ -1,47 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Reactable in js" />
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+    <title>Snowpack App</title>
+    <script src="lib/aframe.min.js"></script>
+    <script src="lib/aframe-ar.js"></script>
+    <script type="module" src="/dist/index.js"></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Reactable in js" />
-  <link rel="stylesheet" type="text/css" href="/index.css" />
-  <title>Snowpack App</title>
-  <script src="lib/aframe.min.js"></script>
-  <script src="lib/aframe-ar.js"></script>
-  <script type="module" src="/dist/index.js"></script>
-</head>
+  <body style="margin: 0px; overflow: hidden">
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      renderer="logarithmicDepthBuffer: false;"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+    >
+      <a-marker id="marker-0" markerhandler type="barcode" value="0"></a-marker>
+      <a-marker id="marker-1" markerhandler type="barcode" value="1"></a-marker>
+      <a-marker id="marker-2" markerhandler type="barcode" value="2"></a-marker>
+      <a-marker id="marker-3" markerhandler type="barcode" value="3"></a-marker>
+      <a-marker id="marker-4" markerhandler type="barcode" value="4"></a-marker>
+      <a-marker id="marker-5" markerhandler type="barcode" value="5"></a-marker>
+      <a-marker id="marker-6" markerhandler type="barcode" value="6"></a-marker>
+      <a-marker id="marker-7" markerhandler type="barcode" value="7"></a-marker>
+      <a-marker id="marker-8" markerhandler type="barcode" value="8"></a-marker>
+      <a-marker id="marker-9" markerhandler type="barcode" value="9"></a-marker>
+      <a-marker
+        id="marker-10"
+        markerhandler
+        type="barcode"
+        value="10"
+      ></a-marker>
+      <a-marker
+        id="marker-11"
+        markerhandler
+        type="barcode"
+        value="11"
+      ></a-marker>
+      <a-marker
+        id="marker-12"
+        markerhandler
+        type="barcode"
+        value="12"
+      ></a-marker>
+      <a-marker
+        id="marker-13"
+        markerhandler
+        type="barcode"
+        value="13"
+      ></a-marker>
+      <a-marker
+        id="marker-14"
+        markerhandler
+        type="barcode"
+        value="14"
+      ></a-marker>
+      <a-marker
+        id="marker-15"
+        markerhandler
+        type="barcode"
+        value="15"
+      ></a-marker>
+      <a-marker
+        id="marker-16"
+        markerhandler
+        type="barcode"
+        value="16"
+      ></a-marker>
+      <a-marker
+        id="marker-17"
+        markerhandler
+        type="barcode"
+        value="17"
+      ></a-marker>
+      <a-marker
+        id="marker-18"
+        markerhandler
+        type="barcode"
+        value="18"
+      ></a-marker>
 
-<body style="margin: 0px; overflow: hidden">
-  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: false;" embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
-    <a-marker id="marker-0" markerhandler type="barcode" value="0"></a-marker>
-    <a-marker id="marker-1" markerhandler type="barcode" value="1"></a-marker>
-    <a-marker id="marker-2" markerhandler type="barcode" value="2"></a-marker>
-    <a-marker id="marker-3" markerhandler type="barcode" value="3"></a-marker>
-    <a-marker id="marker-4" markerhandler type="barcode" value="4"></a-marker>
-    <a-marker id="marker-5" markerhandler type="barcode" value="5"></a-marker>
-    <a-marker id="marker-6" markerhandler type="barcode" value="6"></a-marker>
-    <a-marker id="marker-7" markerhandler type="barcode" value="7"></a-marker>
-    <a-marker id="marker-8" markerhandler type="barcode" value="8"></a-marker>
-    <a-marker id="marker-9" markerhandler type="barcode" value="9"></a-marker>
-    <a-marker id="marker-10" markerhandler type="barcode" value="10"></a-marker>
-    <a-marker id="marker-11" markerhandler type="barcode" value="11"></a-marker>
-    <a-marker id="marker-12" markerhandler type="barcode" value="12"></a-marker>
-    <a-marker id="marker-13" markerhandler type="barcode" value="13"></a-marker>
-    <a-marker id="marker-14" markerhandler type="barcode" value="14"></a-marker>
-    <a-marker id="marker-15" markerhandler type="barcode" value="15"></a-marker>
-    <a-marker id="marker-16" markerhandler type="barcode" value="16"></a-marker>
-    <a-marker id="marker-17" markerhandler type="barcode" value="17"></a-marker>
-    <a-marker id="marker-18" markerhandler type="barcode" value="18"></a-marker>
-
-    <a-entity camera></a-entity>
-  </a-scene>
-  <canvas id="drawboard" width="128" height="128"></canvas>
-  <div class="overlay" id="start-overlay">
-    <button id="start-button">Start!</button>
-  </div>
-</body>
-
+      <a-entity camera></a-entity>
+    </a-scene>
+    <canvas id="drawboard" width="750" height="750"></canvas>
+    <div class="overlay" id="start-overlay">
+      <button id="start-button">Start!</button>
+    </div>
+  </body>
 </html>

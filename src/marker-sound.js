@@ -12,10 +12,19 @@ export default class {
     this.reverb = new Tone.JCReverb(0.4).toDestination();
     this.delay = new Tone.FeedbackDelay(0.5);
     this.distortion = new Tone.Distortion(0.8);
-    this.synth = new Tone[synthName]().chain(this.distortion, this.reverb, this.delay);
+    this.synth = new Tone[synthName]().chain(
+      this.distortion,
+      this.reverb,
+      this.delay,
+    );
 
     this.marker = marker;
-    if (marker && marker.object3D && marker.object3D.position && marker.object3D.position.x) {
+    if (
+      marker &&
+      marker.object3D &&
+      marker.object3D.position &&
+      marker.object3D.position.x
+    ) {
       this.markerIsAdded = true;
     }
     this.marker.addEventListener('markerFound', () => {
@@ -29,33 +38,42 @@ export default class {
 
   loop(canvas, ctx, driver) {
     if (this.markerIsAdded) {
-
       // define
-      let markerX = normalisePosition(this.marker.object3D.position.x)*canvas.width;
-      let markerY = normalisePosition(this.marker.object3D.position.y)*canvas.height;
+      let markerX =
+        normalisePosition(this.marker.object3D.position.x) * canvas.width;
+      let markerY =
+        normalisePosition(this.marker.object3D.position.y) * canvas.height;
       let rotation = normaliseRotation(this.marker.object3D.rotation.y);
 
       // draw the rotation
       ctx.strokeStyle = 'white';
       ctx.beginPath();
-      ctx.arc(markerX, markerY, canvas.width/30, -Math.PI/2, -Math.PI/2 + 2 * Math.PI * rotation);
+      ctx.arc(
+        markerX,
+        markerY,
+        canvas.width / 30,
+        -Math.PI / 2,
+        -Math.PI / 2 + 2 * Math.PI * rotation,
+      );
       ctx.stroke();
 
       // compare with drivermaker
       if (driver) {
         // play sound
-        const distance = Math.sqrt(Math.pow(markerX - driver.x, 2) + Math.pow(markerY - driver.y, 2));
-        
-        if (distance < canvas.width / 2) {
+        const distance = Math.sqrt(
+          Math.pow(markerX - driver.x, 2) + Math.pow(markerY - driver.y, 2),
+        );
+
+        if (distance < canvas.width) {
           const angle = Math.atan2(markerY - driver.y, markerX - driver.x);
 
           if (driver.r >= angle - 0.2 && driver.r <= angle + 0.2) {
             if (this.hit == false) {
               this.hit = true;
-              const now = Tone.now()
+              const now = Tone.now();
               const note = Math.floor(rotation * this.notes.length);
               this.synth.triggerAttack(this.notes[note], now);
-              this.synth.triggerRelease(now + distance/1000);
+              this.synth.triggerRelease(now + distance / 1000);
             }
           } else {
             this.hit = false;
@@ -78,7 +96,7 @@ export default class {
         y: markerY,
         reverb: this.reverb,
         distortion: this.distortion,
-      }
+      };
     }
 
     return null;
